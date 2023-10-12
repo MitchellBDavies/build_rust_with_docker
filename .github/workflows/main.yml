@@ -15,4 +15,8 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Build docker images
+        run: docker build -t my-rust-app .
+      - name: Run tests
+        run: docker run -it --rm --name my-running-app my-rust-app
       - run: echo "🍏 This job's status is ${{ job.status }}."
