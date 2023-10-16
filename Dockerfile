@@ -6,5 +6,11 @@ RUN cargo test
 FROM rust:1.73.0 as build
 WORKDIR /usr/src/myapp
 COPY . .
-RUN cargo install --path .
-CMD ["build_rust_with_docker"]
+RUN cargo build --release 
+#RUN cp target/release/build_rust_with_docker .
+CMD ["./build_rust_with_docker"]
+
+FROM rust:1.73.0 as runtime 
+WORKDIR /usr/src/myapp
+COPY --from=build /usr/src/myapp/target/release/build_rust_with_docker .
+CMD ["./build_rust_with_docker"]
