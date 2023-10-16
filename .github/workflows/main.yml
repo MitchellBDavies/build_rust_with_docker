@@ -18,7 +18,7 @@ jobs:
       - name: Run Tests
         run: docker build --target=test -t test-app .
       - name: Create Runtime container
-        run: docker build --target=runetime -t runtime-container .
-      - name: Deploy runtime container
+        run: docker build --target=runime -t runtime-container .
+      - name: Deploy Runtime container
         run: docker run --rm --name my-running-app runtime-container
       - run: echo "🍏 This job's status is ${{ job.status }}."
