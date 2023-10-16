@@ -1,6 +1,10 @@
-FROM rust:1.73.0
+FROM rust:1.73.0 as test
 WORKDIR /usr/src/myapp
 COPY . .
 RUN cargo test
-RUN cargo install --path .
-CMD ["build_rust_with_docker"]
+
+FROM rust:1.73.0 as build
+WORKDIR /usr/src/myapp
+COPY . .
+RUN cargo build --release
+CMD ["build_rust_with_docker.exe"]
