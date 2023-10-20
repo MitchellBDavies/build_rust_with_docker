@@ -13,4 +13,5 @@ CMD ["./build_rust_with_docker"]
 FROM rust:1.73.0-slim as runtime 
 WORKDIR /usr/src/myapp
 COPY --from=build /usr/src/myapp/target/release/build_rust_with_docker .
+EXPOSE 8080
 CMD ["./build_rust_with_docker"]
