@@ -1,0 +1,17 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is deploying a release
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Docker Login
+        run: echo ${{ secrets.DOCKER_ACCESS_TOKEN }} | docker login --username ${{ secrets.DOCKER_USER_NAME }}
+      - name: Run Tests
+        run: docker build --target=test -t test-app .
+      - name: Create Runtime container
+        run: docker build --target=runtime -t runtime-container .
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
