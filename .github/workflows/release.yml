@@ -1,6 +1,10 @@
 name: GitHub Actions Release to DockerHub
 run-name: ${{ github.actor }} is deploying a release.
-on: [published]
+on:
+  release:
+    types: [published]
+
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -21,4 +25,3 @@ jobs:
       - name: Push to DockerHub
         run: docker push ${{ secrets.DOCKER_USER_NAME }}/my_private_repo:${{ github.event.release.tag_name }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-
