@@ -1,6 +1,6 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is deploying a release
-on: [push]
+name: GitHub Actions Release to DockerHub
+run-name: ${{ github.actor }} is deploying a release.
+on: [release]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -16,5 +16,9 @@ jobs:
         run: docker build --target=test -t test-app .
       - name: Create Runtime container
         run: docker build --target=runtime -t runtime-container .
+      - name: Prepare container for release
+        run: docker tag runtime-container ${{ secrets.DOCKER_USER_NAME }}/my_private_repo:${{ steps.meta.outputs.tags }}
+      - name: Push to DockerHub
+        run: docker push ${{ secrets.DOCKER_USER_NAME }}/my_private_repo:${{ steps.meta.outputs.tags }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
